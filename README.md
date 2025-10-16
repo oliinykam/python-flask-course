@@ -1,0 +1,5 @@
+![Resume pic_1](screenshots/Resume_1)
+![Resume pic_2](screenshots/Resume_1)
+![Resume pic_3](screenshots/Resume_1)
+![Contacts pic_1](screenshots/Contacts_1)
+![Contacts pic_2](screenshots/Contacts_2)
