@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            
+            <h1 class="display-4 text-center mb-5">Контакти</h1>
+            
+            <section class="contact-info mb-5">
+                <h2 class="section-title">Зв'яжіться зі мною</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="contact-item">
+                            <h5>📧 Email</h5>
+                            <p>andrii.oliinyk@example.com</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="contact-item">
+                            <h5>📱 Телефон</h5>
+                            <p>+380 (99) 000-00-00</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="contact-item">
+                            <h5>🌐 GitHub</h5>
+                            <p><a href="" target="_blank">github.com/AndriiOliinyk</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="contact-item">
+                            <h5>💼 LinkedIn</h5>
+                            <p><a href="" target="_blank">linkedin.com/in/AndriiOliinyk</a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact-form">
+                <h2 class="section-title">Надіслати повідомлення</h2>
+                <form class="needs-validation" novalidate>
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ім'я *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="invalid-feedback">
+                            Будь ласка, введіть ваше ім'я.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="invalid-feedback">
+                            Будь ласка, введіть коректний email.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Тема</label>
+                        <input type="text" class="form-control" id="subject" name="subject">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Повідомлення *</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        <div class="invalid-feedback">
+                            Будь ласка, введіть повідомлення.
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="agree" required>
+                        <label class="form-check-label" for="agree">
+                            Я погоджуюсь з обробкою моїх персональних даних *
+                        </label>
+                        <div class="invalid-feedback">
+                            Необхідно погодитись з умовами.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        Відправити повідомлення
+                    </button>
+
+                    <p class="text-muted small mt-3">
+                        * Обов'язкові поля<br>
+                        <em>Примітка: Це форма-заглушка. Повідомлення поки не відправляються.</em>
+                    </p>
+                </form>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+            } else {
+                alert('Форма-заглушка: повідомлення не відправлено. Функціонал буде реалізовано пізніше.');
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
+</script>
+{% endblock %}
