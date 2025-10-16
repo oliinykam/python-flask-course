@@ -1,14 +1,17 @@
-from flask import Flask  
-app = Flask(__name__)    
+from flask import Flask, render_template
 
-@app.route('/')   # URL '/' to be handled by main() route handler
-def main():
-    return 'Hello, world!'
+app = Flask(__name__)
 
-@app.route('/homepage') 
-def home():
-    """View for the Home page of your website."""
-    return "This is your homepage :) "
+@app.route('/')
+@app.route('/resume')
+def resume():
+    page_title = "Моє Резюме"
+    return render_template('resume.html', title=page_title)
 
-if __name__ == "__main__":
-    app.run()  # Launch built-in web server and run this Flask webapp, debug=True
+@app.route('/contacts')
+def contacts():
+    page_title = "Контакти"
+    return render_template('contacts.html', title=page_title)
+
+if __name__ == '__main__':
+    app.run(debug=True)
