@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="sticky-menu">
+                <nav class="section-nav">
+                    <h5 class="mb-3">Зміст</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link section-link active" href="#about">Про себе</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link section-link" href="#education">Освіта</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link section-link" href="#skills">Навички</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link section-link" href="#technologies">Технології</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link section-link" href="#experience">Проекти</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="col-lg-9">
+            <section id="about" class="resume-section mb-5">
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='images/photo.png') }}" 
+                         alt="Моє фото" 
+                         class="profile-photo rounded-circle mb-3">
+                    <h1 class="display-4">Ваше Ім'я Прізвище</h1>
+                    <p class="lead text-muted">Web Developer | Student</p>
+                </div>
+                
+                <h2 class="section-title">Про себе</h2>
+                <p>Я студент, який захоплюється веб-розробкою та сучасними технологіями. 
+                   Отримую досвід роботи з Python, Flask, та frontend технологіями. 
+                   Постійно навчаюся та прагну розвиватися в галузі IT.</p>
+            </section>
+
+            <section id="education" class="resume-section mb-5">
+                <h2 class="section-title">Освіта</h2>
+                <div class="education-item">
+                    <h4>Карпатський національний університет імені Василя Стефаника</h4>
+                    <p class="text-muted">Факультет математики та інформатики</p>
+                    <p>Спеціальність: Інженерія програмного забезпечення</p>
+                </div>
+            </section>
+
+            <section id="skills" class="resume-section mb-5">
+                <h2 class="section-title">Навички</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="skills-list">
+                            <li>Аналітичне мислення</li>
+                            <li>Командна робота</li>
+                            <li>Самоорганізація</li>
+                            <li>Швидке навчання</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="skills-list">
+                            <li>Вирішення проблем</li>
+                            <li>Увага до деталей</li>
+                            <li>Комунікація</li>
+                            <li>Тайм-менеджмент</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="technologies" class="resume-section mb-5">
+                <h2 class="section-title">Технології</h2>
+                <div class="tech-badges">
+                    <span class="badge bg-primary">Python</span>
+                    <span class="badge bg-success">Flask</span>
+                    <span class="badge bg-info">HTML/CSS</span>
+                    <span class="badge bg-warning text-dark">JavaScript</span>
+                    <span class="badge bg-secondary">Bootstrap</span>
+                    <span class="badge bg-danger">Git</span>
+                    <span class="badge bg-dark">SQL</span>
+                    <span class="badge bg-primary">Jinja2</span>
+                </div>
+            </section>
+
+            <section id="experience" class="resume-section mb-5">
+                <h2 class="section-title">Проекти</h2>
+                
+                <div class="project-item mb-4">
+                    <h4>Персональний вебсайт-портфоліо</h4>
+                    <p class="text-muted">Вересень 2025</p>
+                    <p>Розробка власного вебсайту з використанням Flask, Bootstrap та Jinja2 шаблонів. 
+                       Реалізація маршрутизації, статичних файлів та адаптивного дизайну.</p>
+                    <p><strong>Технології:</strong> Python, Flask, HTML, CSS, Bootstrap</p>
+                </div>
+
+                <div class="project-item mb-4">
+                    <h4>Інформаційний вебсайт</h4>
+                    <p class="text-muted">Липень 2025</p>
+                    <p>Розробка багатоcторінкового інформаційного сайту про дерева.</p>
+                    <p><strong>Технології:</strong> HTML, CSS, JS</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSectionMenu">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Зміст резюме</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <nav>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link section-link" href="#about" data-bs-dismiss="offcanvas">Про себе</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link section-link" href="#education" data-bs-dismiss="offcanvas">Освіта</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link section-link" href="#skills" data-bs-dismiss="offcanvas">Навички</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link section-link" href="#technologies" data-bs-dismiss="offcanvas">Технології</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link section-link" href="#experience" data-bs-dismiss="offcanvas">Проекти</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<button class="btn btn-primary floating-menu-btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSectionMenu">
+    <i class="bi bi-list"></i> Зміст
+</button>
+
+<script>
+document.querySelectorAll('.section-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = targetSection.offsetTop - navbarHeight - 20;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        }
+    });
+});
+
+window.addEventListener('scroll', function() {
+    const sections = document.querySelectorAll('.resume-section');
+    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+    
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - navbarHeight - 100;
+        if (window.pageYOffset >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    document.querySelectorAll('.section-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
+    });
+});
+</script>
+{% endblock %}
