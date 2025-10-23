@@ -1,4 +1,3 @@
-from app import app
 from flask import render_template
 
 @app.route('/')
@@ -11,6 +10,3 @@ def resume():
 def contacts():
     page_title = "Контакти"
     return render_template('contacts.html', title=page_title)
-
-if __name__ == '__main__':
-    app.run(debug=True)
