@@ -1,8 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .profile-container {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    
+    .profile-card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+    }
+    
+    .profile-container {
+        background-color: #212529;
+        color: #ffffff;
+    }
+    
+    .profile-card {
+        background-color: #343a40;
+        border: 1px solid #495057;
+        color: #ffffff;
+    }
+    
+    .profile-card .card-header {
+        background-color: #495057 !important;
+        color: #ffffff !important;
+    }
+    
+    .table {
+        color: #ffffff;
+    }
+    
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .form-control {
+        background-color: #495057;
+        color: #ffffff;
+        border-color: #6c757d;
+    }
+    
+    .form-control:focus {
+        background-color: #495057;
+        color: #ffffff;
+    }
+    
+    .form-label {
+        color: #ffffff;
+    }
+
+</style>
 <div class="container mt-5">
-    <!-- Welcome Section -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card shadow">
@@ -18,8 +68,25 @@
             </div>
         </div>
     </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Кольорова схема</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Поточна схема: <strong>{{ color_scheme }}</strong></p>
+                        <a href="{{ url_for('users_bp.set_theme', theme_name='light') }}" class="btn btn-light">
+                            Світла тема
+                        </a>
+                        <a href="{{ url_for('users_bp.set_theme', theme_name='dark') }}" class="btn btn-dark">
+                            Темна тема
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- Add Cookie Section -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card shadow">
@@ -52,7 +119,6 @@
         </div>
     </div>
 
-    <!-- Current Cookies Section -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card shadow">

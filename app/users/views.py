@@ -63,7 +63,6 @@ def logout():
     flash('Ви успішно вийшли з системи!', 'info')
     return redirect(url_for('users_bp.login'))
 
-# Add Cookie
 @users_bp.route('/add-cookie', methods=['POST'])
 def add_cookie():
     if 'username' not in session:
@@ -120,10 +119,27 @@ def delete_all_cookies():
     
     deleted_count = 0
     for key in request.cookies:
-        # Не видаляємо 'session' кукі, бо це розлогінить нас
         if key != 'session':
             response.delete_cookie(key)
             deleted_count += 1
     
     flash(f'Успішно видалено {deleted_count} кукі (окрім сесії).', 'success')
     return response
+
+@users_bp.route("/set-theme/<theme_name>")
+def set_theme(theme_name):
+    """
+    Встановлює кольорову схему, зберігаючи її в кукі.
+    """
+    if theme_name not in ("light", "dark"):
+        theme_name = "dark"  
+
+    redirect_to = url_for("users_bp.profile")
+
+    resp = make_response(redirect(redirect_to))
+
+    max_age_seconds = 365 * 24 * 60 * 60  
+    resp.set_cookie("theme", theme_name, max_age=max_age_seconds)
+
+    flash(f"Тему змінено на {theme_name}.", "info")
+    return resp    
