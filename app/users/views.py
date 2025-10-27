@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 
 users_bp = Blueprint(
     'users_bp', __name__,
@@ -18,19 +18,38 @@ def admin():
     print(to_url)
     return redirect(to_url)
 
-@users_bp.route("/login", methods=['GET', 'POST'])
+VALID_CREDENTIALS = {
+    'admin': 'password123',
+    'user1': 'mypass456'
+}
+
+@users_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
     if request.method == 'POST':
-        if request.form['username'] != 'username' or \
-                request.form['password'] != 'password':
-            error = 'Invalid credentials'
-        else:
-            flash('You were successfully logged in')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if username in VALID_CREDENTIALS and VALID_CREDENTIALS[username] == password:
+            session['username'] = username
+            flash('Ви успішно увійшли в систему!', 'success')
             return redirect(url_for('users_bp.profile'))
-    return render_template("users/login.html",title="Login Page", error=error)
+        else:
+            flash('Невірне ім\'я користувача або пароль!', 'error')
+            return redirect(url_for('users_bp.login'))
+    
+    return render_template('users/login.html')
 
 @users_bp.route("/profile")
 def profile():
-    return render_template("users/profile.html",title="Profile page")
+    if 'username' not in session:
+        flash('Будь ласка, увійдіть в систему для доступу до профілю!', 'warning')
+        return redirect(url_for('users_bp.login'))
+    
+    username = session['username']
+    return render_template('users/profile.html', username=username)
 
+@users_bp.route("/logout")
+def logout():
+    session.pop('username', None)
+    flash('Ви успішно вийшли з системи!', 'info')
+    return redirect(url_for('users_bp.login'))

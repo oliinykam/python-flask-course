@@ -1,27 +1,38 @@
-{% extends "base.html" %} {% block content %}
-<br />
-<h1>Login</h1>
-{% if error %}
-<p class="error"><strong>Error:</strong> {{ error }}</p> 
-{% endif %}
+{% extends "base.html" %}
 
-<form method="post">
-  <dl>
-    <dt>Username:</dt>
-    <dd>
-      <input
-        type="text"
-        name="username"
-        value="{{
-          request.form.username }}"
-      />
-    </dd>
+{% block title %}Вхід в систему{% endblock %}
 
-    <dt>Password:</dt>
-    <dd><input type="password" name="password" /></dd>
-  </dl>
-
-  <p><input type="submit" value="Login" /></p>
-</form>
-
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Вхід в систему</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('users_bp.login') }}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Ім'я користувача</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Увійти</button>
+                    </form>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            <strong>Тестові дані для входу:</strong><br>
+                            admin / password123<br>
+                            user1 / mypass456
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
