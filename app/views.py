@@ -11,3 +11,4 @@ def resume():
 def contacts():
     page_title = "Контакти"
     return render_template('contacts.html', title=page_title)
+
