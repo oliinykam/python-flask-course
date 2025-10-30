@@ -10,3 +10,5 @@ dist/
 htmlcov/
 .tox/
 docs/_build/
+
+*.log
