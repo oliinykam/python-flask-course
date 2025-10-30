@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, make_response
 from datetime import datetime, timedelta
+from ..forms import LoginForm  
 
 users_bp = Blueprint(
     'users_bp', __name__,
@@ -24,43 +25,41 @@ VALID_CREDENTIALS = {
     'user1': 'mypass456'
 }
 
-@users_bp.route('/login', methods=['GET', 'POST'])
+@users_bp.route('/login', methods=['GET', 'POST']) 
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    form = LoginForm()
+    
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        remember = form.remember.data
         
-        if username in VALID_CREDENTIALS and VALID_CREDENTIALS[username] == password:
+        if username == 'admin' and password == 'password1':
             session['username'] = username
-            flash('Ви успішно увійшли в систему!', 'success')
+
+            remember_msg = "та опцією 'Запам'ятати мене'" if remember else "без опції 'Запам'ятати мене'"
+            flash(f'Вітаємо, {username}! Ви успішно увійшли {remember_msg}.', 'success')
+            
             return redirect(url_for('users_bp.profile'))
         else:
-            flash('Невірне ім\'я користувача або пароль!', 'error')
+            flash('Невірне ім\'я користувача або пароль.', 'danger')
             return redirect(url_for('users_bp.login'))
-    
-    return render_template('users/login.html')
 
-@users_bp.route("/profile")
+    return render_template('users/login.html', form=form)
+
+
+@users_bp.route('/profile')
 def profile():
     if 'username' not in session:
-        flash('Будь ласка, увійдіть в систему для доступу до профілю!', 'warning')
+        flash('Будь ласка, увійдіть, щоб побачити цю сторінку.', 'warning')
         return redirect(url_for('users_bp.login'))
-    
-    username = session['username']
+        
+    return render_template('users/profile.html')
 
-    cookies = {}
-    for key, value in request.cookies.items():
-        if key == 'session':
-            cookies[key] = '[Flask session cookie — HTTP-only]'
-        else:
-            cookies[key] = value
-
-    return render_template('users/profile.html', username=username, cookies=cookies)
-
-@users_bp.route("/logout")
+@users_bp.route('/logout')
 def logout():
     session.pop('username', None)
-    flash('Ви успішно вийшли з системи!', 'info')
+    flash('Ви вийшли з системи.', 'info')
     return redirect(url_for('users_bp.login'))
 
 @users_bp.route('/add-cookie', methods=['POST'])

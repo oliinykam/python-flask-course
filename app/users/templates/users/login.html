@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "includes/_render_field.html" import render_field %}
 
 {% block title %}Вхід в систему{% endblock %}
 
@@ -11,23 +12,25 @@
                     <h3 class="mb-0">Вхід в систему</h3>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ url_for('users_bp.login') }}">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Ім'я користувача</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                    <form method="POST" action="{{ url_for('users_bp.login') }}" novalidate>
+                        {{ form.csrf_token }}
+
+                        {{ render_field(form.username, class="form-control") }}
+
+                        {{ render_field(form.password, class="form-control") }}
+
+                        <div class="mb-3 form-check">
+                            {{ form.remember(class="form-check-input") }}
+                            {{ form.remember.label(class="form-check-label") }}
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Увійти</button>
+
+                        {{ form.submit(class="btn btn-primary w-100") }}
                     </form>
                     
                     <div class="mt-3">
                         <small class="text-muted">
                             <strong>Тестові дані для входу:</strong><br>
-                            admin / password123<br>
-                            user1 / mypass456
+                            admin / password1
                         </small>
                     </div>
                 </div>

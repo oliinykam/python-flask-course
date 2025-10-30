@@ -2,16 +2,23 @@
   <div class="mb-3">
     
     {{ field.label(class="form-label") }}
+
+    {% set base_class = kwargs.get('class', 'form-control') %}
     
+    {% set _ = kwargs.pop('class', None) %}
+
     {% if field.errors %}
-      {{ field(class="form-control is-invalid", **kwargs) | safe }}
+      {% set field_class = base_class + ' is-invalid' %}
+      
+      {{ field(class=field_class, **kwargs) | safe }}
+      
       <div class="invalid-feedback">
         {% for error in field.errors %}
           <span>{{ error }}</span><br>
         {% endfor %}
       </div>
     {% else %}
-      {{ field(class="form-control", **kwargs) | safe }}
+      {{ field(class=base_class, **kwargs) | safe }}
     {% endif %}
     
   </div>
