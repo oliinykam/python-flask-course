@@ -20,11 +20,6 @@ def admin():
     print(to_url)
     return redirect(to_url)
 
-VALID_CREDENTIALS = {
-    'admin': 'password123',
-    'user1': 'mypass456'
-}
-
 @users_bp.route('/login', methods=['GET', 'POST']) 
 def login():
     form = LoginForm()
@@ -37,7 +32,7 @@ def login():
         if username == 'admin' and password == 'password1':
             session['username'] = username
 
-            remember_msg = "та опцією 'Запам'ятати мене'" if remember else "без опції 'Запам'ятати мене'"
+            remember_msg = "з опцією 'Запам'ятати мене'" if remember else "без опції 'Запам'ятати мене'"
             flash(f'Вітаємо, {username}! Ви успішно увійшли {remember_msg}.', 'success')
             
             return redirect(url_for('users_bp.profile'))
