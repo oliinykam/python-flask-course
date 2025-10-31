@@ -9,6 +9,8 @@
 ![Contact.log](screenshots/contacts_log.png)
 *Contact.log*
 
+---
+
 ### Завдання 2 - форма авторизації з валідацією.
 ![Пусті поля](screenshots/login_validation1.png)
 *Спроба ввійти якщо поля порожні*
