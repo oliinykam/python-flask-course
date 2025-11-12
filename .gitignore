@@ -12,3 +12,10 @@ htmlcov/
 docs/_build/
 
 *.log
+
+data.db
+data.sqlite
+app/data.sqlite
+instance/
+.env
+migrations/
