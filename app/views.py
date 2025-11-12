@@ -1,5 +1,4 @@
 import logging
-from app import app
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from .forms import ContactForm  
 
@@ -9,20 +8,21 @@ logging.basicConfig(
     format='%(asctime)s - %(message)s'
 )
 
-@app.route('/')
-@app.route('/resume')
+main_bp = Blueprint('main', __name__)
+
+@main_bp.route('/')
+@main_bp.route('/resume')
 def resume():
     page_title = "Моє Резюме"
     return render_template('resume.html', title=page_title)
 
-@app.route('/contacts', methods=['GET', 'POST'])
+@main_bp.route('/contacts', methods=['GET', 'POST'])
 def contacts():
     form = ContactForm()
     
     if form.validate_on_submit():
         name = form.name.data
         email = form.email.data
-        # phone = form.phone.data # Not used, but keeped for the understanding
         subject = form.subject.data
         message = form.message.data
 
@@ -37,7 +37,7 @@ def contacts():
             logging.error(f"Failed to log contact submission: {e}")
             flash('Сталася помилка під час збереження вашого повідомлення. Спробуйте пізніше.', 'danger')
 
-        return redirect(url_for('contacts'))
+        return redirect(url_for('.contacts')) 
     
     elif request.method == 'POST':
         flash('Будь ласка, виправте помилки у формі та спробуйте знову.', 'danger')

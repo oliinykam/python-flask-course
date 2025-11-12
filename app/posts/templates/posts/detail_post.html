@@ -1,13 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %} POSTS {% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-
-    <h1>Post № {{post["id"]}} - {{post["title"]}} </h1>
-
-    <p>{{ post.get('content') }}</p>
-
-    <a href="{{ url_for("posts.get_posts") }}">Return posts</a>
-
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ post.title }}</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-subtitle mb-2 text-muted">
+                Author: {{ post.author }} | Category: {{ post.category.value.capitalize() }}
+            </h5>
+            <p class="card-text">
+                <small class="text-muted">
+                    Published on: {{ post.posted.strftime('%Y-%m-%d %H:%M') }}
+                </small>
+            </p>
+            <hr>
+            <p style="white-space: pre-wrap;">{{ post.content }}</p>
+        </div>
+        <div class="card-footer text-end">
+            
+            <a href="{{ url_for('posts.get_posts') }}" class="btn btn-secondary me-auto">
+                ← Повернутися до всіх постів
+            </a>
+            <a href="{{ url_for('posts.update_post', id=post.id) }}" class="btn btn-warning">
+                Edit
+            </a>
+            <a href="{{ url_for('posts.delete_post', id=post.id) }}" class="btn btn-danger">
+                Delete
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

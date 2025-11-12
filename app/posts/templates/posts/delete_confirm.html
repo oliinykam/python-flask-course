@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Підтвердження видалення</h2>
+    <p>Ви впевнені що хочете видалити цей пост ?
+       <strong>"{{ post.title }}"</strong>?
+    </p> 
+    
+    <form method="POST" action="">
+        <button type="submit" class="btn btn-danger">Так, видалити</button> 
+        <a href="{{ url_for('posts.detail_post', id=post.id) }}" class="btn btn-secondary">
+            Відмінити
+        </a>
+    </form>
+</div>
+{% endblock %}

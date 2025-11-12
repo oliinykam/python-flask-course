@@ -1,25 +1,42 @@
 {% macro render_field(field) %}
-  <div class="mb-3">
-    
-    {{ field.label(class="form-label") }}
+  
+  {% if field.type == 'BooleanField' %}
+    <div class="mb-3 form-check">
+      {% set base_class = kwargs.get('class', 'form-check-input') %}
+      {% set _ = kwargs.pop('class', None) %}
+      {% if field.errors %}{% set field_class = base_class + ' is-invalid' %}{% else %}{% set field_class = base_class %}{% endif %}
+      
+      {{ field(class=field_class, **kwargs) | safe }}
+      {{ field.label(class="form-check-label") }} {# Лейбл ПІСЛЯ чекбоксу #}
+      
+      {% if field.errors %}
+        <div class="invalid-feedback d-block">
+          {% for error in field.errors %}<span>{{ error }}</span><br>{% endfor %}
+        </div>
+      {% endif %}
+    </div>
 
-    {% set base_class = kwargs.get('class', 'form-control') %}
-    
+  {% elif field.type == 'SubmitField' %}
+    {% set base_class = kwargs.get('class', 'btn btn-primary') %}
     {% set _ = kwargs.pop('class', None) %}
+    {{ field(class=base_class, **kwargs) | safe }}
 
-    {% if field.errors %}
-      {% set field_class = base_class + ' is-invalid' %}
+  {% else %}
+    <div class="mb-3">
+      {{ field.label(class="form-label") }} {# Лейбл ПЕРЕД полем #}
+      
+      {% set base_class = kwargs.get('class', 'form-control') %}
+      {% set _ = kwargs.pop('class', None) %}
+      {% if field.errors %}{% set field_class = base_class + ' is-invalid' %}{% else %}{% set field_class = base_class %}{% endif %}
       
       {{ field(class=field_class, **kwargs) | safe }}
       
-      <div class="invalid-feedback">
-        {% for error in field.errors %}
-          <span>{{ error }}</span><br>
-        {% endfor %}
-      </div>
-    {% else %}
-      {{ field(class=base_class, **kwargs) | safe }}
-    {% endif %}
-    
-  </div>
+      {% if field.errors %}
+        <div class="invalid-feedback">
+          {% for error in field.errors %}<span>{{ error }}</span><br>{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
 {% endmacro %}

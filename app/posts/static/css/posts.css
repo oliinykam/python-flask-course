@@ -1,0 +1,46 @@
+/* app/posts/static/css/posts.css */
+
+.myclass {
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+}
+
+/* Нові стилі для картки зі зразка [image_3bf798.png]
+*/
+.post-card-lab {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  /* Центруємо вміст, як на зразку */
+  text-align: center; 
+  transition: box-shadow 0.3s ease;
+}
+
+.post-card-lab:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Стиль для іконки "POST" 
+*/
+.post-card-icon {
+  width: 100%; /* Зображення займає всю ширину картки */
+  height: 200px; /* Фіксована висота зображення */
+  object-fit: cover; /* Зберігає пропорції, обрізаючи зайве */
+  border-bottom: 1px solid #eee;
+}
+
+.post-card-lab .card-body {
+  padding: 20px;
+}
+
+.post-card-lab .card-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.post-card-lab .card-text {
+  font-size: 0.95rem;
+  color: #555;
+}
