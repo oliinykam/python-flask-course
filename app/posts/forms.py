@@ -4,6 +4,7 @@ from wtforms import (
     TextAreaField, 
     SubmitField, 
     SelectField,
+    SelectMultipleField, 
     BooleanField,
     DateTimeLocalField  
 )
@@ -12,7 +13,8 @@ from wtforms.validators import (
     Length
 )
 from datetime import datetime
-from .models import PostCategory  
+from app import db 
+from .models import PostCategory, User, Tag 
 
 class PostForm(FlaskForm):
     """
@@ -29,12 +31,12 @@ class PostForm(FlaskForm):
         validators=[DataRequired()]
     )
     
-    author = StringField(
-        'Автор', 
-        validators=[DataRequired(), Length(max=20)], 
-        default='Anonymous'
+    author_id = SelectField(
+        "Автор", 
+        coerce=int, 
+        validators=[DataRequired()]
     )
-
+    
     is_active = BooleanField(
         "Активний (відображається на сайті)", 
         default=True      
@@ -52,5 +54,20 @@ class PostForm(FlaskForm):
         choices=[(cat.value, cat.name.capitalize()) for cat in PostCategory],
         validators=[DataRequired()]
     )
+
+    tags = SelectMultipleField(
+        "Теги",
+        coerce=int,
+        validators=[]
+    )
     
     submit = SubmitField("Створити пост")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        authors = db.session.scalars(db.select(User).order_by(User.id)).all()
+        self.author_id.choices = [(a.id, a.username) for a in authors]
+        
+        tags_list = db.session.scalars(db.select(Tag).order_by(Tag.name)).all()
+        self.tags.choices = [(t.id, t.name) for t in tags_list]

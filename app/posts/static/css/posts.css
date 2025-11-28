@@ -44,3 +44,16 @@
   font-size: 0.95rem;
   color: #555;
 }
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag-item {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

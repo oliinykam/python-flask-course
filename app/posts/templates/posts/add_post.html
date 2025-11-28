@@ -17,9 +17,12 @@
                 
                 {{ f.render_field(form.title, class="form-control") }}
                 {{ f.render_field(form.content, class="form-control", rows=5) }}
-                {{ f.render_field(form.author, class="form-control") }}
+                {{ f.render_field(form.author_id, class="form-select") }} 
                 {{ f.render_field(form.category, class="form-select") }}
                 {{ f.render_field(form.posted, class="form-control") }}
+                
+                {{ f.render_field(form.tags, class="form-select", multiple=true) }} 
+
                 {{ f.render_field(form.is_active) }}
                 
                 <br>

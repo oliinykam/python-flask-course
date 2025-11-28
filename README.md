@@ -1,29 +1,36 @@
-![Local application run](screenshots/flask_shell.png)
-*Створення бази даних через фласк оболонку*
+# Лабораторна робота №8: ORM. Зв'язки в SQLAlchemy
 
-![Local application run](screenshots/migration_init.png)
-*Ініціалізація міграції і бази даних*
+### 1. Зв'язок Один-до-Багатьох (User-Post)
+Було створено модель користувача та встановлено зв'язок, де один користувач може мати багато постів.
 
-![Local application run](screenshots/migrate_is_active_author.png)
-*Міграція (добавлено два нових поля)*
+![User Posts Shell](screenshots/step7_user_posts.png)
+*Крок 7: Вивід постів для користувачів user1 та user2 через user.posts*
 
-![Local application run](screenshots/sqllite_posts.png)<br>
-*База даних після міграції*
+---
 
-![Local application run](screenshots/tests.png)
-*Успішне проходження тестів*
+### 2. Зв'язок Багато-до-Багатьох (Post-Tag)
+Додано можливість позначати пости тегами.
 
-![Local application run](screenshots/all_posts.png)
-*Сторінка всіх постів*
+**Додавання тегів у базу даних:**
+![Create Tags Shell](screenshots/step10_create_tags.png)
+*Крок 10 (частина 1): Створення тегів LifeStyle, Tech, Art, Science, Finance*
 
-![Local application run](screenshots/flash_create_post.png)
-*Повідомлення про створення поста*
+**Прив'язка тегів до постів та перевірка:**
+![Append Tags Shell](screenshots/step10_append_tags.png)
+*Крок 10 (частина 2): Прив'язка тегів до поста та перевірка двостороннього зв'язку (post.tags та tag.posts)*
 
-![Local application run](screenshots/detail_after_update.png)
-*Сторінка одного поста після оновлення*
+---
 
-![Local application run](screenshots/delete_page.png)
-*Сторінка підтвердження видалення*
+### 3. Оновлення Інтерфейсу
 
-![Local application run](screenshots/flash_delete_post.png)
-*Повідомлення про видалення*
+**Форма створення/редагування поста:**
+Реалізовано вибір автора (SelectField) та множинний вибір тегів (SelectMultipleField).
+
+![Post Form](screenshots/step11_form.png)
+*Крок 8 та 11: Оновлена форма з вибором автора та тегів*
+
+**Сторінка детального перегляду поста:**
+Додано відображення тегів для поста.
+
+![Post Details](screenshots/step12_details.png)
+*Крок 12: Фінальний вигляд сторінки*
