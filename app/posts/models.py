@@ -1,6 +1,7 @@
 import enum
 from datetime import datetime
-from app import db  
+from app import db, login_manager 
+from flask_login import UserMixin
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import (
@@ -15,6 +16,10 @@ from sqlalchemy import (
     Column
 )
 
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
+
 
 class PostCategory(enum.Enum):
     NEWS = 'news'
@@ -25,7 +30,7 @@ class PostCategory(enum.Enum):
     def __str__(self):
         return self.value
 
-class User(db.Model):
+class User(db.Model, UserMixin): 
     __tablename__ = 'users'
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)

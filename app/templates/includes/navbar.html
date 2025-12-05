@@ -18,12 +18,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('posts.get_posts') }}">Posts</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('users_bp.login') }}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('users_bp.profile') }}">Profile</a>
-                </li>
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users_bp.user_list') }}">All users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users_bp.profile') }}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users_bp.account') }}">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ url_for('users_bp.logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users_bp.register') }}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users_bp.login') }}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

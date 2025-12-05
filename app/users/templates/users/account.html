@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Мій Акаунт</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <img src="{{ url_for('static', filename='images/photo.png') }}" 
+                                 alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 150px;">
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="card-title">Вітаємо, {{ current_user.username }}!</h2>
+                            <p class="text-muted">Ви успішно увійшли в систему.</p>
+                            <hr>
+                            <p><strong>Username:</strong> {{ current_user.username }}</p>
+                            <p><strong>Email:</strong> {{ current_user.email }}</p>
+                            <p><strong>ID:</strong> {{ current_user.id }}</p>
+                            
+                            <div class="mt-4">
+                                <a href="{{ url_for('users_bp.profile') }}" class="btn btn-outline-primary">
+                                    Налаштування (Кукі/Тема)
+                                </a>
+                                <a href="{{ url_for('users_bp.logout') }}" class="btn btn-danger">
+                                    Вийти
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
