@@ -1,8 +1,12 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, session, make_response
+import os
+import secrets
+from PIL import Image
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session, make_response, current_app
 from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
 from app.posts.models import User
-from ..forms import LoginForm, RegistrationForm
+from ..forms import LoginForm, RegistrationForm, UpdateAccountForm, ChangePasswordForm
+from datetime import datetime, timezone
 
 users_bp = Blueprint(
     'users_bp', __name__,
@@ -50,10 +54,62 @@ def login():
 
     return render_template('users/login.html', form=form)
 
-@users_bp.route('/account')
-@login_required  
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(current_app.root_path, 'static/images/profile_pics', picture_fn)
+
+    output_size = (128, 128)
+    i = Image.open(form_picture)
+    # Стиснення реалізоване з дотриманням пропорцій картинки 
+    # Для того щоб зображення зменшувалось саме до 128*128 треба використати
+    # i = ImageOps.fit(i, output_size, Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+@users_bp.route('/account', methods=['GET', 'POST'])
+@login_required
 def account():
-    return render_template('users/account.html')
+    form = UpdateAccountForm()
+    password_form = ChangePasswordForm()
+
+    if form.submit_account.data and form.validate():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
+        
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        current_user.about_me = form.about_me.data
+        
+        db.session.commit()
+        flash('Ваш акаунт оновлено!', 'success')
+        return redirect(url_for('users_bp.account'))
+
+    if password_form.submit_password.data and password_form.validate():
+        if bcrypt.check_password_hash(current_user.password, password_form.current_password.data):
+            hashed_password = bcrypt.generate_password_hash(password_form.password.data).decode('utf-8')
+            current_user.password = hashed_password
+            db.session.commit()
+            flash('Ваш пароль успішно оновлено!', 'success')
+            return redirect(url_for('users_bp.account'))
+        else:
+            flash('Невірний поточний пароль', 'danger')
+
+    if request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.about_me.data = current_user.about_me
+
+    image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
+    
+    return render_template('users/account.html', 
+                         image_file=image_file, 
+                         form=form, 
+                         password_form=password_form)
 
 @users_bp.route('/profile')
 @login_required
@@ -117,3 +173,26 @@ def admin():
 @users_bp.route("/hi/<string:name>")
 def greetings(name):
     return render_template("users/hi.html", name=name.upper())
+
+@users_bp.route('/user/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if bcrypt.check_password_hash(current_user.password, form.current_password.data):
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            current_user.password = hashed_password
+            db.session.commit()
+            flash('Ваш пароль успішно оновлено!', 'success')
+            return redirect(url_for('users_bp.account'))
+        else:
+            flash('Невірний поточний пароль', 'danger')
+            
+    return render_template('users/change_password.html', form=form)
+
+@users_bp.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.now(timezone.utc)
+        
+        db.session.commit()

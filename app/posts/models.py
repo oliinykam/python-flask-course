@@ -40,6 +40,10 @@ class User(db.Model, UserMixin):
     
     posts: Mapped[list["Post"]] = relationship(back_populates="user", cascade="all, delete-orphan")
     
+    image_file: Mapped[str] = mapped_column(String(20), nullable=False, default='default.jpg')
+    about_me: Mapped[str] = mapped_column(String(140), nullable=True)
+    last_seen: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    
     def __repr__(self):
         return f"User(id={self.id}, username='{self.username}')"
 
