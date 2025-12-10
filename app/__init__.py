@@ -45,4 +45,7 @@ def create_app(config_name: str = os.environ.get("FLASK_CONFIG", "dev")) -> Flas
         
         from .posts import models 
 
+        from .vacancies import vacancies_bp
+        app.register_blueprint(vacancies_bp)
+
     return app

@@ -39,6 +39,7 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(100), nullable=False) 
     
     posts: Mapped[list["Post"]] = relationship(back_populates="user", cascade="all, delete-orphan")
+    vacancies = relationship("Vacancy", back_populates="user", cascade="all, delete-orphan")
     
     image_file: Mapped[str] = mapped_column(String(20), nullable=False, default='default.jpg')
     about_me: Mapped[str] = mapped_column(String(140), nullable=True)
