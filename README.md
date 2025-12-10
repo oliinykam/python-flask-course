@@ -12,7 +12,7 @@
 ---
 
 ### 3. Оновлення інформації аккаунта
-![Сторінка входу](screenshots/info_update.png)
+![Сторінка входу](screenshots/info_updated.png)
 
 ---
 
@@ -22,4 +22,4 @@
 ---
 
 ### 5. Помилка зміни паролю
-![Список користувачів](screenshots/all_users.png)
+![Список користувачів](screenshots/pass_change_error.png)
